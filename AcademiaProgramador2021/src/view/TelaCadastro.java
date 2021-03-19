@@ -850,14 +850,16 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
     private void bt_equip_excluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_equip_excluirMouseClicked
 
         int i = tbl_equip.getSelectedRow();
+        System.out.println(i);
 
-        if (i >= 0 && i < listaEquipamentos.size()) {
+        if (i >=0 && i < listaEquipamentos.size()) {
 
             listaEquipamentos.remove(i);
 
         }
 
-        combo_chamada_equipamento.removeItemAt(i);
+        combo_chamada_equipamento.remove(i);
+        serializarEquipamentos(listaEquipamentos);
         LoadTableEquip();
         modo = "Navegar";
         LimpaCamposEquip();
@@ -965,6 +967,7 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
         }
 
+        serializarChamadas(listaChamadas);
         LoadTableChamada();
         modo = "Navegar";
         LimpaCamposChamada();
