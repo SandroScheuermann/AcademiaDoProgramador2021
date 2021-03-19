@@ -41,7 +41,7 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
             listaEquipamentos = desserializarEquipamentos(); //desserializando dados salvos nas listas equipamento e chamada 
             listaChamadas = desserializarChamadas();
-                        
+
             LoadTableEquip();  // método para carregar os dados nas tabelas
             LoadTableChamada();
 
@@ -129,7 +129,14 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
             modeloE.addRow(linha);
 
         }
+        
+        combo_chamada_equipamento.removeAllItems();
 
+        for (Equipamentos u : listaEquipamentos) {
+
+            combo_chamada_equipamento.addItem(u.getNomePeça());
+
+        }
         tbl_equip.setModel(modeloE);
 
     }
@@ -153,10 +160,10 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
             for (int i = 0; i < listaChamadas.size(); i++) {
 
-                temp = listaChamadas.get(i).getData().getTimestamp(); 
+                temp = listaChamadas.get(i).getData().getTimestamp();
 
                 ms = ((hoje.getTimestamp().getTime() - temp.getTime())) / 86400000; // calculando a diferença de dias primeiro pegando a data em milisegundos,
-                                                                                    // depois dividindo por 8640000
+                // depois dividindo por 8640000
 
                 Object linha[] = new Object[]{listaChamadas.get(i).getTitulo(), listaChamadas.get(i).getEquipamento(), listaChamadas.get(i).getData().getDataString(), ms};
                 modeloC.addRow(linha);
@@ -742,7 +749,7 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
     //a fim de manipular os jframes.
     private void bt_equip_novoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_equip_novoMouseClicked
 
-        modo = "Novo"; 
+        modo = "Novo";
         ManipulaInterfaceEquip();
         LimpaCamposEquip();
 
@@ -852,16 +859,18 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
     private void bt_equip_excluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_equip_excluirMouseClicked
 
-        int i = tbl_equip.getSelectedRow();
+        int i = tbl_equip.convertRowIndexToModel(tbl_equip.getSelectedRow());
+
         System.out.println(i);
 
-        if (i >=0 && i < listaEquipamentos.size()) {
+        if (i >= 0 && i < listaEquipamentos.size()) {
 
             listaEquipamentos.remove(i);
 
         }
+        combo_chamada_equipamento.insertItemAt(null, i);
 
-        combo_chamada_equipamento.remove(i);
+        //combo_chamada_equipamento.
         serializarEquipamentos(listaEquipamentos);
         LoadTableEquip();
         modo = "Navegar";
@@ -963,6 +972,7 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
     private void bt_chamada_excluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_chamada_excluirMouseClicked
 
         int i = tbl_chamada.getSelectedRow();
+        System.out.println(i);
 
         if (i >= 0 && i < listaChamadas.size()) {
 
@@ -979,15 +989,6 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_bt_chamada_excluirMouseClicked
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-
-        combo_chamada_equipamento.removeAllItems();
-
-        for (Equipamentos u : listaEquipamentos) {
-
-            combo_chamada_equipamento.addItem(u.getNomePeça());
-
-        }
-
 
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
