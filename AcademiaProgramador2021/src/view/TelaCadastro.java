@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,8 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+import javax.swing.JOptionPane;
 
-public class TelaCadastro extends javax.swing.JFrame {
+public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
     ArrayList<Chamadas> listaChamadas;
     ArrayList<Equipamentos> listaEquipamentos;
@@ -79,17 +81,24 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         };
 
-        for (int i = 0; i < listaChamadas.size(); i++) {
+        try {
 
-            temp = listaChamadas.get(i).getData().getTimestamp();
+            for (int i = 0; i < listaChamadas.size(); i++) {
 
-            ms = ((hoje.getTimestamp().getTime() - temp.getTime())) / 86400000;
+                temp = listaChamadas.get(i).getData().getTimestamp();
 
-            Object linha[] = new Object[]{listaChamadas.get(i).getTitulo(), listaChamadas.get(i).getEquipamento(), listaChamadas.get(i).getData().getDataString(), ms};
-            modeloC.addRow(linha);
+                ms = ((hoje.getTimestamp().getTime() - temp.getTime())) / 86400000;
+
+                Object linha[] = new Object[]{listaChamadas.get(i).getTitulo(), listaChamadas.get(i).getEquipamento(), listaChamadas.get(i).getData().getDataString(), ms};
+                modeloC.addRow(linha);
+
+            }
+            tbl_chamada.setModel(modeloC);
+        } catch (Exception i) {
+
+            JOptionPane.showMessageDialog(null, "Dados Inválidos!", "ERRO", JOptionPane.ERROR_MESSAGE);
 
         }
-        tbl_chamada.setModel(modeloC);
 
     }
 
@@ -124,6 +133,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 text_chamada_data.setEnabled(false);
                 text_chamada_desc.setEnabled(false);
                 text_chamada_titulo.setEnabled(false);
+                combo_chamada_equipamento.setEnabled(false);
 
                 break;
 
@@ -136,6 +146,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 text_chamada_data.setEnabled(true);
                 text_chamada_desc.setEnabled(true);
                 text_chamada_titulo.setEnabled(true);
+                combo_chamada_equipamento.setEnabled(true);
 
                 break;
             case "Editar":
@@ -147,6 +158,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 text_chamada_data.setEnabled(true);
                 text_chamada_desc.setEnabled(true);
                 text_chamada_titulo.setEnabled(true);
+                combo_chamada_equipamento.setEnabled(true);
 
                 break;
             case "Excluir":
@@ -158,6 +170,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 text_chamada_data.setEnabled(false);
                 text_chamada_desc.setEnabled(false);
                 text_chamada_titulo.setEnabled(false);
+                combo_chamada_equipamento.setEnabled(false);
 
                 break;
             case "Seleção":
@@ -168,8 +181,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                 bt_chamada_excluir.setEnabled(true);
                 text_chamada_data.setEnabled(false);
                 text_chamada_desc.setEnabled(false);
-
                 text_chamada_titulo.setEnabled(false);
+                combo_chamada_equipamento.setEnabled(false);
 
                 break;
 
@@ -298,6 +311,12 @@ public class TelaCadastro extends javax.swing.JFrame {
         jFormattedTextField1.setText("jFormattedTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         tbl_equip.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -679,8 +698,6 @@ public class TelaCadastro extends javax.swing.JFrame {
                     serie,
                     text_equip_data.getText());
 
-            combo_chamada_equipamento.addItem(text_equip_nome.getText());
-
             listaEquipamentos.add(p);
         } else if (modo.equals("Editar")) {
 
@@ -690,9 +707,7 @@ public class TelaCadastro extends javax.swing.JFrame {
             listaEquipamentos.get(i).setNomePeça(text_equip_nome.getText());
             listaEquipamentos.get(i).setNumeroSerie(serie);
             listaEquipamentos.get(i).setPrecoAquisicao(preco);
-            
-            combo_chamada_equipamento.removeItemAt(i);
-            combo_chamada_equipamento.insertItemAt(listaEquipamentos.get(i).getNomePeça(),i);
+
 
         }
 
@@ -743,6 +758,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         }
 
+        combo_chamada_equipamento.removeItemAt(i);
         LoadTableEquip();
         modo = "Navegar";
         LimpaCamposEquip();
@@ -792,6 +808,7 @@ public class TelaCadastro extends javax.swing.JFrame {
             listaChamadas.get(i).setData(temp);
 
         }
+
         LoadTableChamada();
 
         modo = "Navegar";
@@ -838,6 +855,22 @@ public class TelaCadastro extends javax.swing.JFrame {
         ManipulaInterfaceChamada();
 
     }//GEN-LAST:event_bt_chamada_excluirMouseClicked
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        
+        combo_chamada_equipamento.removeAllItems();
+        
+        for(Equipamentos u : listaEquipamentos){
+            
+            combo_chamada_equipamento.addItem(u.getNomePeça());
+                    
+            
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     /**
      * @param args the command line arguments
