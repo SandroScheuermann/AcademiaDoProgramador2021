@@ -5,6 +5,10 @@
  */
 package view;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -35,6 +39,12 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
             listaEquipamentos = new ArrayList<>();
             listaChamadas = new ArrayList<>();
 
+            listaEquipamentos = desserializarEquipamentos();
+            listaChamadas = desserializarChamadas();
+                        
+            LoadTableEquip();
+            LoadTableChamada();
+
             modo = "Navegar";
             ManipulaInterfaceEquip();
             ManipulaInterfaceChamada();
@@ -42,6 +52,64 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
             Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void serializarChamadas(ArrayList<Chamadas> listaChamadas) {
+        try {
+            FileOutputStream arquivo = new FileOutputStream("listaChamadas.ser");
+            ObjectOutputStream out = new ObjectOutputStream(arquivo);
+
+            out.writeObject(listaChamadas);
+            out.close();
+            arquivo.close();
+        } catch (Exception e) {
+            System.out.println("Erro na serialização!");
+        }
+    }
+
+    public ArrayList<Chamadas> desserializarChamadas() {
+        try {
+            FileInputStream arquivo = new FileInputStream("listaChamadas.ser");
+            ObjectInputStream inp = new ObjectInputStream(arquivo);
+
+            ArrayList<Chamadas> listaChamadas = (ArrayList<Chamadas>) inp.readObject();
+            inp.close();
+            arquivo.close();
+            System.out.println(listaChamadas.toString());
+            return listaChamadas;
+        } catch (Exception e) {
+            System.out.println("Erro na Desserialização!");
+            return listaChamadas;
+        }
+    }
+
+    public void serializarEquipamentos(ArrayList<Equipamentos> inventarioEquipamentos) {
+        try {
+            FileOutputStream arquivo = new FileOutputStream("inventarioEquipamentos.ser");
+            ObjectOutputStream out = new ObjectOutputStream(arquivo);
+
+            out.writeObject(inventarioEquipamentos);
+            out.close();
+            arquivo.close();
+        } catch (Exception e) {
+            System.out.println("Erro na serialização!");
+        }
+    }
+
+    public ArrayList<Equipamentos> desserializarEquipamentos() {
+        try {
+            FileInputStream arquivo = new FileInputStream("inventarioEquipamentos.ser");
+            ObjectInputStream inp = new ObjectInputStream(arquivo);
+
+            ArrayList<Equipamentos> listaEquipamentos = (ArrayList<Equipamentos>) inp.readObject();
+            inp.close();
+            arquivo.close();
+            System.out.println(listaEquipamentos.toString());
+            return listaEquipamentos;
+        } catch (Exception e) {
+            System.out.println("Erro na Desserialização!");
+            return listaEquipamentos;
+        }
     }
 
     public void LoadTableEquip() {
@@ -735,6 +803,7 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
                     listaEquipamentos.get(i).setPrecoAquisicao(preco);
 
                 }
+                serializarEquipamentos(listaEquipamentos);
             }
         } catch (Exception E) {
 
@@ -846,6 +915,8 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
                     listaChamadas.get(i).setData(temp);
 
                 }
+
+                serializarChamadas(listaChamadas);
 
             }
         } catch (Exception E) {

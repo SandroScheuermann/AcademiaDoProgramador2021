@@ -1,6 +1,8 @@
 package view;
 
-public class Equipamentos {
+import java.io.Serializable;
+
+public class Equipamentos implements Serializable {
 
     private String nomePeça;
     private String nomeFabricante;

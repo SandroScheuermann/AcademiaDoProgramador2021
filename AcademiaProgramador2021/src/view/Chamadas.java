@@ -1,6 +1,8 @@
 package view;
 
-public class Chamadas {
+import java.io.Serializable;
+
+public class Chamadas implements Serializable {
 
     String titulo;
     String descricao;

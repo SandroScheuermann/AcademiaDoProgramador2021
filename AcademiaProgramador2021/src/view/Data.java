@@ -1,11 +1,12 @@
 package view;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Data {
+public class Data implements Serializable {
 
     private Timestamp data;
     public static final String BarraSemHora = "dd/MM/yyyy";
