@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,6 +66,10 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     public void LoadTableChamada() {
 
+        Data hoje = new Data();
+        Timestamp temp;
+        long ms;
+
         DefaultTableModel modeloC = new DefaultTableModel(new Object[]{"Título do Chamado", "Equipamento", "Data de Abertura", "Dias em Aberto"}, 0) {
 
             @Override
@@ -76,7 +81,11 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         for (int i = 0; i < listaChamadas.size(); i++) {
 
-            Object linha[] = new Object[]{listaChamadas.get(i).getTitulo(), listaChamadas.get(i).getEquipamento(), listaChamadas.get(i).getData().getDataString()};
+            temp = listaChamadas.get(i).getData().getTimestamp();
+
+            ms = ((hoje.getTimestamp().getTime() - temp.getTime())) / 86400000;
+
+            Object linha[] = new Object[]{listaChamadas.get(i).getTitulo(), listaChamadas.get(i).getEquipamento(), listaChamadas.get(i).getData().getDataString(), ms};
             modeloC.addRow(linha);
 
         }
@@ -660,7 +669,6 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     private void bt_equip_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_equip_salvarMouseClicked
 
-        
         double preco = Double.parseDouble(text_equip_preco.getText());
         int serie = Integer.parseInt(text_equip_serie.getText());
 
@@ -764,7 +772,6 @@ public class TelaCadastro extends javax.swing.JFrame {
         String auxtemp = text_chamada_data.getText();
         Data temp;
         temp = new Data(auxtemp, Data.BarraSemHora);
-        
 
         if (modo.equals("Novo")) {
 

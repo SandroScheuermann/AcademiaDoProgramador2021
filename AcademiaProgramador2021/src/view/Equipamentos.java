@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Date;
-
 public class Equipamentos {
 
     private String nomePeça;
@@ -62,9 +60,5 @@ public class Equipamentos {
         this.numeroSerie = numeroSerie;
         this.dataAquisicao = dataAquisicao;
     }
-
-
-
-
 
 }
