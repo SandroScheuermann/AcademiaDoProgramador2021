@@ -687,11 +687,26 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
     private void bt_equip_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_equip_salvarMouseClicked
 
+        Boolean testador = false;
+
         try {
             double preco = Double.parseDouble(text_equip_preco.getText());
             int serie = Integer.parseInt(text_equip_serie.getText());
 
-            if (text_equip_nome.getText().length() < 6) {
+            for (int j = 0; j < listaEquipamentos.size(); j++) {
+
+                if (serie == listaEquipamentos.get(j).getNumeroSerie()) {
+
+                    testador = true;
+                }
+
+            }
+
+            if (testador == true) {
+
+                JOptionPane.showMessageDialog(null, "NÚMERO DE SÉRIE JÁ CADASTRADO", "ERRO ", JOptionPane.ERROR_MESSAGE);
+
+            } else if (text_equip_nome.getText().length() < 6) {
 
                 JOptionPane.showMessageDialog(null, "O NOME NECESSITA DE AO MENOS 6 CARACTERES!", "ERRO ", JOptionPane.ERROR_MESSAGE);
 
