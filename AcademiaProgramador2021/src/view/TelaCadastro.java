@@ -23,15 +23,15 @@ import javax.swing.JOptionPane;
 
 public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
-    ArrayList<Chamadas> listaChamadas;
-    ArrayList<Equipamentos> listaEquipamentos;
-    String modo;
+    ArrayList<Chamadas> listaChamadas; // Lista de chamadas
+    ArrayList<Equipamentos> listaEquipamentos; // Lista de Equipamentos
+    String modo; // modo para o case dos métodos manipula
 
     public TelaCadastro() {
         try {
             initComponents();
 
-            MaskFormatter maskDataC = new MaskFormatter("##/##/####");
+            MaskFormatter maskDataC = new MaskFormatter("##/##/####"); //formatadores de data dos textField.
             MaskFormatter maskDataE = new MaskFormatter("##/##/####");
             maskDataC.install(text_chamada_data);
             maskDataE.install(text_equip_data);
@@ -39,14 +39,14 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
             listaEquipamentos = new ArrayList<>();
             listaChamadas = new ArrayList<>();
 
-            listaEquipamentos = desserializarEquipamentos();
+            listaEquipamentos = desserializarEquipamentos(); //desserializando dados salvos nas listas equipamento e chamada 
             listaChamadas = desserializarChamadas();
                         
-            LoadTableEquip();
+            LoadTableEquip();  // método para carregar os dados nas tabelas
             LoadTableChamada();
 
-            modo = "Navegar";
-            ManipulaInterfaceEquip();
+            modo = "Navegar"; // definindo o modo para o case
+            ManipulaInterfaceEquip(); // métodos para manipular os frames
             ManipulaInterfaceChamada();
         } catch (ParseException ex) {
             Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,7 +65,7 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
         } catch (Exception e) {
             System.out.println("Erro na serialização!");
         }
-    }
+    } // métodos de gravação/leitura 
 
     public ArrayList<Chamadas> desserializarChamadas() {
         try {
@@ -112,7 +112,7 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
         }
     }
 
-    public void LoadTableEquip() {
+    public void LoadTableEquip() { //método para carregar a tabela de Equipamentos
 
         DefaultTableModel modeloE = new DefaultTableModel(new Object[]{"Nome", "Número de Série", "Fabricante"}, 0) {
 
@@ -153,9 +153,10 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
             for (int i = 0; i < listaChamadas.size(); i++) {
 
-                temp = listaChamadas.get(i).getData().getTimestamp();
+                temp = listaChamadas.get(i).getData().getTimestamp(); 
 
-                ms = ((hoje.getTimestamp().getTime() - temp.getTime())) / 86400000;
+                ms = ((hoje.getTimestamp().getTime() - temp.getTime())) / 86400000; // calculando a diferença de dias primeiro pegando a data em milisegundos,
+                                                                                    // depois dividindo por 8640000
 
                 Object linha[] = new Object[]{listaChamadas.get(i).getTitulo(), listaChamadas.get(i).getEquipamento(), listaChamadas.get(i).getData().getDataString(), ms};
                 modeloC.addRow(linha);
@@ -176,7 +177,7 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
         text_chamada_desc.setText("");
         text_chamada_titulo.setText("");
 
-    }
+    } //método para limpar os campos de texto
 
     public void LimpaCamposEquip() {
 
@@ -256,7 +257,7 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
         }
 
-    }
+    } //método para manipular os frames
 
     public void ManipulaInterfaceEquip() {
 
@@ -737,9 +738,11 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //botões de função (cancelar,salvar,editar,excluir,etc), a maioria só define o "modo" para o método que possui o CASE com o mesmo,
+    //a fim de manipular os jframes.
     private void bt_equip_novoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_equip_novoMouseClicked
 
-        modo = "Novo";
+        modo = "Novo"; 
         ManipulaInterfaceEquip();
         LimpaCamposEquip();
 

@@ -2,8 +2,12 @@ package view;
 
 import java.io.Serializable;
 
+
+    //classe dos equipamentos,  possui os dados com get/set/toString/Construtor 
+
 public class Equipamentos implements Serializable {
 
+    
     private String nomePeça;
     private String nomeFabricante;
     private double precoAquisicao;

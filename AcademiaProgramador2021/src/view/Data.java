@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Data implements Serializable {
+//essa classe eu encontrei há algum tempo na internet, e acho bem mais simples trabalhar com ela então resolvi usar.
+
+public class Data implements Serializable { 
 
     private Timestamp data;
     public static final String BarraSemHora = "dd/MM/yyyy";

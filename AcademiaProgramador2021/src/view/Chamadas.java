@@ -2,6 +2,8 @@ package view;
 
 import java.io.Serializable;
 
+//classe dos chamadas,  possui os dados com get/set/toString/Construtor 
+
 public class Chamadas implements Serializable {
 
     String titulo;
