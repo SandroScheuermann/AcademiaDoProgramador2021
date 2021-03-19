@@ -97,7 +97,6 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         text_chamada_data.setText("");
         text_chamada_desc.setText("");
-        text_chamada_equipamento.setText("");
         text_chamada_titulo.setText("");
 
     }
@@ -124,7 +123,6 @@ public class TelaCadastro extends javax.swing.JFrame {
                 bt_chamada_excluir.setEnabled(false);
                 text_chamada_data.setEnabled(false);
                 text_chamada_desc.setEnabled(false);
-                text_chamada_equipamento.setEnabled(false);
                 text_chamada_titulo.setEnabled(false);
 
                 break;
@@ -137,7 +135,6 @@ public class TelaCadastro extends javax.swing.JFrame {
                 bt_chamada_excluir.setEnabled(false);
                 text_chamada_data.setEnabled(true);
                 text_chamada_desc.setEnabled(true);
-                text_chamada_equipamento.setEnabled(true);
                 text_chamada_titulo.setEnabled(true);
 
                 break;
@@ -149,7 +146,6 @@ public class TelaCadastro extends javax.swing.JFrame {
                 bt_chamada_excluir.setEnabled(false);
                 text_chamada_data.setEnabled(true);
                 text_chamada_desc.setEnabled(true);
-                text_chamada_equipamento.setEnabled(true);
                 text_chamada_titulo.setEnabled(true);
 
                 break;
@@ -161,7 +157,6 @@ public class TelaCadastro extends javax.swing.JFrame {
                 bt_chamada_excluir.setEnabled(false);
                 text_chamada_data.setEnabled(false);
                 text_chamada_desc.setEnabled(false);
-                text_chamada_equipamento.setEnabled(false);
                 text_chamada_titulo.setEnabled(false);
 
                 break;
@@ -173,7 +168,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 bt_chamada_excluir.setEnabled(true);
                 text_chamada_data.setEnabled(false);
                 text_chamada_desc.setEnabled(false);
-                text_chamada_equipamento.setEnabled(false);
+
                 text_chamada_titulo.setEnabled(false);
 
                 break;
@@ -292,10 +287,10 @@ public class TelaCadastro extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         text_chamada_titulo = new javax.swing.JTextField();
         text_chamada_desc = new javax.swing.JTextField();
-        text_chamada_equipamento = new javax.swing.JTextField();
         bt_chamada_salvar = new javax.swing.JButton();
         bt_chamada_cancelar = new javax.swing.JButton();
         text_chamada_data = new javax.swing.JFormattedTextField();
+        combo_chamada_equipamento = new javax.swing.JComboBox<>();
         bt_chamada_novo = new javax.swing.JButton();
         bt_chamada_editar = new javax.swing.JButton();
         bt_chamada_excluir = new javax.swing.JButton();
@@ -524,6 +519,9 @@ public class TelaCadastro extends javax.swing.JFrame {
             }
         });
 
+        combo_chamada_equipamento.setMaximumRowCount(10);
+        combo_chamada_equipamento.setToolTipText("");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -546,8 +544,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                             .addComponent(bt_chamada_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(text_chamada_equipamento)
-                            .addComponent(text_chamada_data)))
+                            .addComponent(text_chamada_data)
+                            .addComponent(combo_chamada_equipamento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(bt_chamada_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -568,11 +566,12 @@ public class TelaCadastro extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(text_chamada_data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(text_chamada_equipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bt_chamada_salvar)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bt_chamada_salvar))
+                    .addComponent(combo_chamada_equipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bt_chamada_cancelar)
                 .addContainerGap(21, Short.MAX_VALUE))
@@ -680,6 +679,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                     serie,
                     text_equip_data.getText());
 
+            combo_chamada_equipamento.addItem(text_equip_nome.getText());
+
             listaEquipamentos.add(p);
         } else if (modo.equals("Editar")) {
 
@@ -689,6 +690,9 @@ public class TelaCadastro extends javax.swing.JFrame {
             listaEquipamentos.get(i).setNomePeça(text_equip_nome.getText());
             listaEquipamentos.get(i).setNumeroSerie(serie);
             listaEquipamentos.get(i).setPrecoAquisicao(preco);
+            
+            combo_chamada_equipamento.removeItemAt(i);
+            combo_chamada_equipamento.insertItemAt(listaEquipamentos.get(i).getNomePeça(),i);
 
         }
 
@@ -757,7 +761,6 @@ public class TelaCadastro extends javax.swing.JFrame {
 
             text_chamada_titulo.setText(c.getTitulo());
             text_chamada_desc.setText(c.getDescricao());
-            text_chamada_equipamento.setText(c.getEquipamento());
             text_chamada_data.setText(String.valueOf(c.getData().getDataString()));
 
             modo = "Seleção";
@@ -777,7 +780,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
             Chamadas c = new Chamadas(text_chamada_titulo.getText(),
                     text_chamada_desc.getText(),
-                    text_chamada_equipamento.getText(),
+                    combo_chamada_equipamento.getSelectedItem().toString(),
                     temp);
 
             listaChamadas.add(c);
@@ -786,7 +789,6 @@ public class TelaCadastro extends javax.swing.JFrame {
             int i = tbl_chamada.getSelectedRow();
             listaChamadas.get(i).setTitulo(text_chamada_titulo.getText());
             listaChamadas.get(i).setDescricao(text_chamada_desc.getText());
-            listaChamadas.get(i).setEquipamento(text_chamada_equipamento.getText());
             listaChamadas.get(i).setData(temp);
 
         }
@@ -883,6 +885,7 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JButton bt_equip_excluir;
     private javax.swing.JButton bt_equip_novo;
     private javax.swing.JButton bt_equip_salvar;
+    private javax.swing.JComboBox<String> combo_chamada_equipamento;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -904,7 +907,6 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JTable tbl_equip;
     private javax.swing.JFormattedTextField text_chamada_data;
     private javax.swing.JTextField text_chamada_desc;
-    private javax.swing.JTextField text_chamada_equipamento;
     private javax.swing.JTextField text_chamada_titulo;
     private javax.swing.JFormattedTextField text_equip_data;
     private javax.swing.JTextField text_equip_fabricante;

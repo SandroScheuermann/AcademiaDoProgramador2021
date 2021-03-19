@@ -442,8 +442,8 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="text_chamada_equipamento" max="32767" attributes="0"/>
                                       <Component id="text_chamada_data" max="32767" attributes="0"/>
+                                      <Component id="combo_chamada_equipamento" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -473,12 +473,14 @@
                               <Component id="text_chamada_data" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="text_chamada_equipamento" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="bt_chamada_salvar" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="combo_chamada_equipamento" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="bt_chamada_salvar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="bt_chamada_cancelar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="21" max="32767" attributes="0"/>
@@ -511,8 +513,6 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="text_chamada_desc">
                 </Component>
-                <Component class="javax.swing.JTextField" name="text_chamada_equipamento">
-                </Component>
                 <Component class="javax.swing.JButton" name="bt_chamada_salvar">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
@@ -530,6 +530,18 @@
                   </Events>
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="text_chamada_data">
+                </Component>
+                <Component class="javax.swing.JComboBox" name="combo_chamada_equipamento">
+                  <Properties>
+                    <Property name="maximumRowCount" type="int" value="10"/>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
