@@ -687,27 +687,43 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
     private void bt_equip_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_equip_salvarMouseClicked
 
-        double preco = Double.parseDouble(text_equip_preco.getText());
-        int serie = Integer.parseInt(text_equip_serie.getText());
+        try {
+            double preco = Double.parseDouble(text_equip_preco.getText());
+            int serie = Integer.parseInt(text_equip_serie.getText());
 
-        if (modo.equals("Novo")) {
+            if (text_equip_nome.getText().length() < 6) {
 
-            Equipamentos p = new Equipamentos(text_equip_nome.getText(),
-                    text_equip_fabricante.getText(),
-                    preco,
-                    serie,
-                    text_equip_data.getText());
+                JOptionPane.showMessageDialog(null, "O NOME NECESSITA DE AO MENOS 6 CARACTERES!", "ERRO ", JOptionPane.ERROR_MESSAGE);
 
-            listaEquipamentos.add(p);
-        } else if (modo.equals("Editar")) {
+            } else if (text_equip_nome.getText().equals("")
+                    || text_equip_fabricante.getText().equals("")
+                    || text_equip_data.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "VERIFIQUE OS DADOS INSERIDOS!", "ERRO ", JOptionPane.ERROR_MESSAGE);
 
-            int i = tbl_equip.getSelectedRow();
-            listaEquipamentos.get(i).setDataAquisicao(text_equip_data.getText());
-            listaEquipamentos.get(i).setNomeFabricante(text_equip_fabricante.getText());
-            listaEquipamentos.get(i).setNomePeça(text_equip_nome.getText());
-            listaEquipamentos.get(i).setNumeroSerie(serie);
-            listaEquipamentos.get(i).setPrecoAquisicao(preco);
+            } else {
 
+                if (modo.equals("Novo")) {
+
+                    Equipamentos p = new Equipamentos(text_equip_nome.getText(),
+                            text_equip_fabricante.getText(),
+                            preco,
+                            serie,
+                            text_equip_data.getText());
+                    listaEquipamentos.add(p);
+                } else if (modo.equals("Editar")) {
+
+                    int i = tbl_equip.getSelectedRow();
+                    listaEquipamentos.get(i).setDataAquisicao(text_equip_data.getText());
+                    listaEquipamentos.get(i).setNomeFabricante(text_equip_fabricante.getText());
+                    listaEquipamentos.get(i).setNomePeça(text_equip_nome.getText());
+                    listaEquipamentos.get(i).setNumeroSerie(serie);
+                    listaEquipamentos.get(i).setPrecoAquisicao(preco);
+
+                }
+            }
+        } catch (Exception E) {
+
+            JOptionPane.showMessageDialog(null, "VERIFIQUE OS DADOS INSERIDOS!", "ERRO ", JOptionPane.ERROR_MESSAGE);
 
         }
 
@@ -715,7 +731,6 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
         modo = "Navegar";
         ManipulaInterfaceEquip();
         LimpaCamposEquip();
-
 
     }//GEN-LAST:event_bt_equip_salvarMouseClicked
 
@@ -788,24 +803,39 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
 
     private void bt_chamada_salvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_chamada_salvarMouseClicked
 
-        String auxtemp = text_chamada_data.getText();
-        Data temp;
-        temp = new Data(auxtemp, Data.BarraSemHora);
+        try {
+            String auxtemp = text_chamada_data.getText();
+            Data temp;
+            temp = new Data(auxtemp, Data.BarraSemHora);
 
-        if (modo.equals("Novo")) {
+            if (text_chamada_titulo.getText().equals("")
+                    || text_chamada_desc.getText().equals("")
+                    || text_chamada_data.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "VERIFIQUE OS DADOS INSERIDOS!", "ERRO ", JOptionPane.ERROR_MESSAGE);
 
-            Chamadas c = new Chamadas(text_chamada_titulo.getText(),
-                    text_chamada_desc.getText(),
-                    combo_chamada_equipamento.getSelectedItem().toString(),
-                    temp);
+            } else {
 
-            listaChamadas.add(c);
-        } else if (modo.equals("Editar")) {
+                if (modo.equals("Novo")) {
 
-            int i = tbl_chamada.getSelectedRow();
-            listaChamadas.get(i).setTitulo(text_chamada_titulo.getText());
-            listaChamadas.get(i).setDescricao(text_chamada_desc.getText());
-            listaChamadas.get(i).setData(temp);
+                    Chamadas c = new Chamadas(text_chamada_titulo.getText(),
+                            text_chamada_desc.getText(),
+                            combo_chamada_equipamento.getSelectedItem().toString(),
+                            temp);
+
+                    listaChamadas.add(c);
+                } else if (modo.equals("Editar")) {
+
+                    int i = tbl_chamada.getSelectedRow();
+                    listaChamadas.get(i).setTitulo(text_chamada_titulo.getText());
+                    listaChamadas.get(i).setDescricao(text_chamada_desc.getText());
+                    listaChamadas.get(i).setData(temp);
+
+                }
+
+            }
+        } catch (Exception E) {
+
+            JOptionPane.showMessageDialog(null, "VERIFIQUE OS DADOS INSERIDOS!", "ERRO ", JOptionPane.ERROR_MESSAGE);
 
         }
 
@@ -857,19 +887,16 @@ public class TelaCadastro extends javax.swing.JFrame implements Serializable {
     }//GEN-LAST:event_bt_chamada_excluirMouseClicked
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        
+
         combo_chamada_equipamento.removeAllItems();
-        
-        for(Equipamentos u : listaEquipamentos){
-            
+
+        for (Equipamentos u : listaEquipamentos) {
+
             combo_chamada_equipamento.addItem(u.getNomePeça());
-                    
-            
+
         }
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     /**
